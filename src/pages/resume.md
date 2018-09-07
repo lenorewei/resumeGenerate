@@ -182,4 +182,3 @@ enabledUploadAndroid: PropTypes.bool,
 ...
 enabledUploadAndroid={this.props.enabledUploadAndroid}
 ```
-#blog/2018-07-01

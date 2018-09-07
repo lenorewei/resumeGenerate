@@ -1,4 +1,5 @@
 const fse = require('fs-extra')
+const fs = require('fs');
 const path = require('path')
 const { promisify } = require('util')
 const ejsRenderFile = promisify(require('ejs').renderFile)
@@ -12,9 +13,6 @@ const distPath = './public'
 
 // clear destination folder
 fse.emptyDirSync(distPath)
-
-// copy assets folder
-fse.copy(`${srcPath}/assets`, `${distPath}/assets`)
 
 // read page templates
 globP('**/*.@(md|ejs|html)', { cwd: `${srcPath}/pages` })
@@ -52,7 +50,8 @@ globP('**/*.@(md|ejs|html)', { cwd: `${srcPath}/pages` })
         })
         .then((data) => {
           // render layout with page contents
-          return ejsRenderFile(`${srcPath}/layouts/default.ejs`, Object.assign({}, data.templateConfig, { body: data.pageContent }))
+          var style = fs.readFileSync(`${srcPath}/style/style.css`, 'utf8');
+          return ejsRenderFile(`${srcPath}/layouts/default.ejs`, Object.assign({}, data.templateConfig, { body: data.pageContent,style:style }))
         })
         .then((layoutContent) => {
           // save the html file
