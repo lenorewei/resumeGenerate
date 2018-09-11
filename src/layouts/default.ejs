@@ -2,25 +2,42 @@
 <html lang="en-US">
 <head>
   <meta charset="UTF-8">
-  <title><%= page.title ? `${page.title} | ` : '' %><%= site.title %></title>
-  <meta name="description" content="<%= page.description || site.description %>"/>
+  <title><%= page.title ? `${page.title} | ` : '' %></title>
+  <meta name="description" content="<%= page.description || '' %>"/>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#157878">
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-  <style type="text/css"> <%- style %></style>
 </head>
 <body>
-<section class="page-header">
-  <h1 class="project-name"><%= site.title %></h1>
-  <h2 class="project-tagline"><%= site.description %></h2>
-  <a href="<%= site.basePath %>/" class="btn">Home</a>
-  <a href="<%= site.basePath %>/docs" class="btn">Docs</a>
-  <a href="https://github.com/doug2k1/nanogen" class="btn">GitHub</a>
-</section>
-<section class="main-content">
-  
-  <%- body %>
-
-</section>
+<div class="main-container">
+  <section class="info-container">
+    <section class="left-content"> 
+      <% for (var item in site){ %>
+        <div class="left-content-item">
+          <% if (item === 'avatar') { %>
+            <img src="<%= site.avatar.url %>" class="header-img"/>
+          <% }else{ %>
+            <div class="content-header"><%= item %></div>
+            <% for (var info in site[item]){ %>
+              <div class="info-item <% if (site[item][info].length > 10) { %>info-iten-long<% }; %>">
+                <span><%= info %></span>
+                <span class="info-detail"><%= site[item][info] %></span>
+              </div>
+            <% }; %>
+          <% } %>
+        </div>
+      <% }; %>
+    </section>
+    <section class="right-content"> 
+      <div class="detail-content">
+        <%- body %>
+      </div>
+      <div class="detail-content">
+        <%- body %>
+      </div>
+    </section>
+  </section>
+</div>
+<style type="text/css"> <%- style %></style>
 </body>
 </html>

@@ -7,16 +7,13 @@ const distPath = './public'
 var html = fs.readFileSync(`${distPath}/resume.html`, 'utf8');
 var options = { 
   format: 'Letter',
-  base: "http://localhost:5000/assets/style.css",
-  border: {
-    top: "0.5in",            // default is 0, units: mm, cm, in, px
-    right: "0.5in",
-    bottom: "0.5in",
-    left: "0.5in"
+  width: "595px",        // allowed units: mm, cm, in, px
+  height: "842px", 
+  border: {         
   },
  };
 
 pdf.create(html, options).toFile(`${distPath}/index.pdf`, function(err, res) {
   if (err) return console.log(err);
-  console.log(res); // { filename: '/app/businesscard.pdf' }
+  console.log(res);
 });
